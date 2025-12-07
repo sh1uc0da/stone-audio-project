@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>窩4小俗投</title>
+    
+    <style>
+        :root {
+            /* 定義主題顏色變數 */
+            --primary-color: #737373; /* 灰 */
+            --secondary-color: #f7f7f7; /* 淺灰色背景 */
+            --text-color: #333;
+            --button-hover: #737373;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            font-size: 1.8em;
+            letter-spacing: 1px;
+        }
+
+        #controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* 按鈕之間的間距 */
+            width: 90%;
+            max-width: 450px; 
+        }
+
+        button {
+            padding: 20px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            
+            /* 顏色和外觀 */
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 播放中的按鈕樣式 */
+        .is-playing {
+            background-color: #d1cfca !important; /* 淺灰 */
+            transform: scale(1.02);
+            box-shadow: 0 0 10px #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>友善石光：</h2>
+
+    <audio id="audioPlayer" src="" preload="auto"></audio>
+
+    <div id="controls">
+        <button id="btn1" onclick="playAudio('track_1.wav', this)">🔊 石巴拉希</button>
+        <button id="btn2" onclick="playAudio('track_2.wav', this)">🔊 笑石我ㄌ</button>
+        <button id="btn3" onclick="playAudio('track_3.wav', this)">🔊 石拜ㄉ麵</button>
+    </div>
+
+    <script>
+        const player = document.getElementById('audioPlayer');
+
+        /**
+         * 播放指定的音訊，播完即停止並還原按鈕樣式
+         * @param {string} filename - 音訊檔案的名稱
+         * @param {HTMLElement} button - 被點擊的按鈕元素
+         */
+        function playAudio(filename, button) {
+            // 1. 停止任何正在播放的音訊並移除所有按鈕的播放樣式
+            player.pause();
+            document.querySelectorAll('#controls button').forEach(btn => {
+                btn.classList.remove('is-playing');
+            });
+            
+            // 2. 設定新的音訊來源並開始播放
+            player.src = filename;
+            player.load();
+            
+            player.play()
+                .then(() => {
+                    // 播放成功後，將目前按鈕加上播放中樣式 (綠色)
+                    button.classList.add('is-playing');
+                })
+                .catch(error => {
+                    console.error('播放失敗，請檢查瀏覽器自動播放限制。', error);
+                    alert('無法播放音訊，請嘗試重新整理。');
+                });
+
+            // 3. 設定音訊結束事件：播完後移除播放中樣式
+            player.onended = function() {
+                button.classList.remove('is-playing');
+            };
+        }
+    </script>
+</body>
+
+</html>
