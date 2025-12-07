@@ -1,0 +1,2 @@
+mkdir b8HjR9wZ 2kPmX7qL tY4aFv3C E1uS5zD6 9gNkW0pA jZ3hR8fV Xp7cQ2wT 6yGbM4dL a5TjK1mE Hk0Wv9rB 4fJdZ3xO
+pause
